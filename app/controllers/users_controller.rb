@@ -16,8 +16,12 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
+    debugger
     @user = User.new(user_params)
-    @user.password = params[:password]
+    params[:password].each do |paths|
+      pics.push(Picture.new(path_to_picture: paths))
+    end
+    
     if @user.save
       render json: @user, status: :created, location: @user
     else
@@ -56,10 +60,10 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :email, :password)
+      params.require(:user).permit(:name, :email, :password, :username, :snapchat, :whatsapp, :facebook, :instagram, :pictures)
     end
 
     def find_user
-      @user = User.find_by(email: params[:email])
+      @user = User.find_by(username: params[:username])
     end
 end
