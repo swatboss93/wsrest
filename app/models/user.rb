@@ -6,8 +6,6 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false },
                     format: { with: VALID_EMAIL_REGEX }
 
-  validates :username, presence: true
-
   has_secure_password
 
   has_many :pictures

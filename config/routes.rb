@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount API::Base => '/api'
   resources :pictures
   resources :users
   post "authentication", to: "users#authentication"

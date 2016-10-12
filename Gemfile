@@ -9,6 +9,12 @@ gem 'puma', '~> 3.0'
 gem 'active_model_serializers', '~> 0.10.0'
 # One-way hash password
 gem 'bcrypt', '~> 3.1.7'
+# Grape
+gem 'grape'
+# Grape entity
+gem 'grape-entity'
+#Disable strong params
+gem 'hashie-forbidden_attributes'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
