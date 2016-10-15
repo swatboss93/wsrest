@@ -1,4 +1,12 @@
+require 'doorkeeper/grape/helpers'
+
 class SeeYou::API < Grape::API
+  helpers Doorkeeper::Grape::Helpers
+
+  before do
+    doorkeeper_authorize!
+  end
+
   version 'v1', using: :path
   format :json 
   #include API::V1::Defaults
