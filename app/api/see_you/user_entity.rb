@@ -1,4 +1,4 @@
-class API::V1::UserEntity < Grape::Entity
+class SeeYou::UserEntity < Grape::Entity
   expose :id
   expose :name 
   expose :email
@@ -6,5 +6,5 @@ class API::V1::UserEntity < Grape::Entity
   expose :whatsapp
   expose :facebook
   expose :instagram
-  expose :pictures, using: API::V1::PictureEntity
+  expose :pictures, using: SeeYou::PictureEntity
 end

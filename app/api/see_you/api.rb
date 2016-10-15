@@ -1,6 +1,6 @@
-class API::V1::SeeYou < Grape::API
-  version 'v1' # path-based versioning by default
-  format :json # We don't like xml anymore
+class SeeYou::API < Grape::API
+  version 'v1', using: :path
+  format :json 
   #include API::V1::Defaults
 
   resource :public do
@@ -16,7 +16,7 @@ class API::V1::SeeYou < Grape::API
     post do
       user = User.new(params[:user])
       if user.save
-        present user, with: API::V1::UserEntity
+        present user, with: SeeYou::UserEntity
       else
         user.errors.full_messages
       end
@@ -24,7 +24,7 @@ class API::V1::SeeYou < Grape::API
 
     desc "All users"
     get do
-      present User.all, with: API::V1::UserEntity
+      present User.all, with: SeeYou::UserEntity
     end
   end
 
@@ -39,7 +39,7 @@ class API::V1::SeeYou < Grape::API
       user = User.find(params[:id])
       #newUser = User.new(params[:user])
       if user.update(params[:user])
-        present user, with: API::V1::UserEntity
+        present user, with: SeeYou::UserEntity
       else
         user.errors.full_messages
       end
