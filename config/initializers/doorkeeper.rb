@@ -11,6 +11,13 @@ Doorkeeper.configure do
     warden.authenticate!(:scope => :user)
   end
 
+  resource_owner_from_credentials do |routes|
+    user = User.find_for_database_authentication(email: params[:username] || params[:email])
+    if user && user.valid_for_authentication? { user.valid_password?(params[:password]) }
+      user
+    end
+  end
+
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
   # admin_authenticator do
   #   # Put your admin authentication logic here.
@@ -19,7 +26,7 @@ Doorkeeper.configure do
   # end
 
   # Authorization Code expiration time (default 10 minutes).
-  authorization_code_expires_in nil
+  # authorization_code_expires_in nil
 
   # Access token expiration time (default 2 hours).
   # If you want to disable expiration, set this to nil.
@@ -99,7 +106,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  # grant_flows %w(authorization_code client_credentials)
+  grant_flows %w(authorization_code password)
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
@@ -111,3 +118,4 @@ Doorkeeper.configure do
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
 end
+Doorkeeper.configuration.token_grant_types << "password"

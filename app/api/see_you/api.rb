@@ -7,6 +7,11 @@ class SeeYou::API < Grape::API
     doorkeeper_authorize!
   end
 
+  helpers do 
+    def current_resource_owner
+      User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+    end
+  end
   version 'v1', using: :path
   format :json 
   #include API::V1::Defaults
@@ -32,7 +37,7 @@ class SeeYou::API < Grape::API
 
     desc "All users"
     get do
-      present User.all, with: SeeYou::UserEntity
+      present current_resource_owner, with: SeeYou::UserEntity
     end
   end
 
