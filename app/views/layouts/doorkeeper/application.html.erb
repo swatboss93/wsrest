@@ -7,17 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <%= stylesheet_link_tag "doorkeeper/application" %>
-  <%= csrf_meta_tags %>
+  <%#= csrf_meta_tags %>
 </head>
 <body>
-<div id="container">
-  <%- if flash[:notice].present? %>
+<!--<div id="container">
+  <%#- if flash[:notice].present? %>
     <div class="alert alert-info">
-      <%= flash[:notice] %>
+      <%#= flash[:notice] %>
     </div>
-  <% end -%>
-
+  <%# end -%>
+  </div>
+-->
   <%= yield %>
-</div>
+
 </body>
 </html>
