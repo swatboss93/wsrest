@@ -1,20 +1,14 @@
-require 'doorkeeper/grape/helpers'
-
 class SeeYou::API < Grape::API
-  helpers Doorkeeper::Grape::Helpers
+  version 'v1', using: :path
+  default_format :json
+  format :json
+  use ::WineBouncer::OAuth2
 
-  before do
-    doorkeeper_authorize!
-  end
-
-  helpers do 
-    def current_resource_owner
-      User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+  helpers do
+    def user_params
+      params.require(:user).permit(:name, :email, :password)
     end
   end
-  version 'v1', using: :path
-  format :json 
-  #include API::V1::Defaults
 
   resource :public do
     desc "Create a user"
@@ -34,15 +28,17 @@ class SeeYou::API < Grape::API
         user.errors.full_messages
       end
     end
-
-    desc "All users"
-    get do
-      present current_resource_owner, with: SeeYou::UserEntity
-    end
   end
 
   resource :private do
+    desc "Recover resource owner"
+    oauth2
+    get do
+      present resource_owner, with: SeeYou::UserEntity
+    end
+    
     desc "Update a user"
+    oauth2
     params do
       requires :user, type: Hash do
         requires :email, type: String, desc: 'Email of user'
@@ -50,28 +46,31 @@ class SeeYou::API < Grape::API
     end
     put ':id' do
       user = User.find(params[:id])
-      #newUser = User.new(params[:user])
-      if user.update(params[:user])
-        present user, with: SeeYou::UserEntity
+      if(resource_owner === user)
+        if user.update(params[:user])
+          present user, with: SeeYou::UserEntity
+        else
+          user.errors.full_messages
+        end
       else
-        user.errors.full_messages
+        {error: "User is not valid"}
       end
     end
 
     desc "Delete a user"
+    oauth2
     params do
       requires :user, type: Hash do
         requires :email, type: String, desc: 'Email of user'
-        requires :password, type: String, desc: 'Password of user'
       end
     end
     delete ':id' do
       user = User.find(params[:id])
-      user.authenticate(params[:user][:password])
-      if user.authenticate(params[:user][:password])
+      if user == resource_owner
         user.destroy
+        {success: "User deleted"}
       else
-        "Unable to delete user"
+        {error: "Invalid user"}
       end
     end
   end

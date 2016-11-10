@@ -19,6 +19,8 @@ gem 'hashie-forbidden_attributes'
 gem 'doorkeeper'
 # Devise for users
 gem 'devise'
+# Wine bouncer for authentication and authorization
+gem 'wine_bouncer'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -52,6 +54,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :production do
   # Use postgresql
   gem 'pg'
-  # 
+  #
   gem 'rails_12factor'
 end
