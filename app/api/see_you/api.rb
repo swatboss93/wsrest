@@ -36,7 +36,7 @@ class SeeYou::API < Grape::API
     get do
       present resource_owner, with: SeeYou::UserEntity
     end
-    
+
     desc "Update a user"
     oauth2
     params do

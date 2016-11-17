@@ -28,9 +28,11 @@ module Wsrest
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
     config.api_only = true
-    config.action_dispatch.default_headers = {
-    'Access-Control-Allow-Origin' => '*',
-    'Access-Control-Request-Method' => %w{GET POST PUT DELETE OPTIONS}.join(",")
-  }
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => :any
+      end
+    end
   end
 end

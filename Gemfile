@@ -21,6 +21,8 @@ gem 'doorkeeper'
 gem 'devise'
 # Wine bouncer for authentication and authorization
 gem 'wine_bouncer'
+# rack-cors
+gem 'rack-cors', :require => 'rack/cors'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production

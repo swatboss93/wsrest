@@ -1,6 +1,6 @@
 class SeeYou::UserEntity < Grape::Entity
   expose :id
-  expose :name 
+  expose :name
   expose :email
   expose :snapchat
   expose :whatsapp
