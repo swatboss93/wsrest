@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   validates :name, presence: true, length: { minimum: 2 }
-
+  validates :latitude, numericality: { :greater_than_or_equal_to => -90, :less_than_or_equal_to => 90 }
+  validates :longitude, numericality: { :greater_than_or_equal_to => -180, :less_than_or_equal_to => 180 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },

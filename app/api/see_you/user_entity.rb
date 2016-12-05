@@ -8,6 +8,8 @@ class SeeYou::UserEntity < Grape::Entity
   expose :instagram
   expose :gender
   expose :first_access
+  expose :latitude
+  expose :longitude
   expose :pictures, using: SeeYou::PictureEntity
   expose :tags, using: SeeYou::TagEntity
 end
