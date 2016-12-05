@@ -39,11 +39,6 @@ class SeeYou::API < Grape::API
 
     desc "Update a user"
     oauth2
-    params do
-      requires :user, type: Hash do
-        requires :email, type: String, desc: 'Email of user'
-      end
-    end
     put ':id' do
       user = User.find(params[:id])
       if(resource_owner === user)
@@ -59,11 +54,6 @@ class SeeYou::API < Grape::API
 
     desc "Delete a user"
     oauth2
-    params do
-      requires :user, type: Hash do
-        requires :email, type: String, desc: 'Email of user'
-      end
-    end
     delete ':id' do
       user = User.find(params[:id])
       if user == resource_owner

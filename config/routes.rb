@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :user_tags
+  resources :tags
   devise_for :users
   use_doorkeeper
   mount SeeYou::API => '/api'
